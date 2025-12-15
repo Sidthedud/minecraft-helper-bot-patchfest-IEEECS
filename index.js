@@ -3,10 +3,6 @@
 
 require('dotenv').config();
 const mineflayer = require('mineflayer');
-const pathfinder = require('mineflayer-pathfinder');
-
-bot.loadPlugin(pathfinder);
-bot.activeTask = null;
 
 // Create the bot instance
 const bot = mineflayer.createBot({
@@ -18,22 +14,42 @@ const bot = mineflayer.createBot({
 // Bot events
 bot.once("spawn", () => {
   console.log("🤖 Bot successfully spawned into the world!");
-  bot.chat("Bot ready! Type .help to see commands.");
 });
 
+commands = [
+  ".hello - Greets the player",
+  ".help - Lists all available commands",
+  ".ping - Checks bot status [Planned]",
+  ".listitems - Display bot's inventory"
+]
+
 // Basic chat command listener
-bot.on("chat", (username, message) => {
+bot.on("chat", async (username, message) => {
 
   if (username === bot.username) return; // ignore itself
 
   if (message === ".hello") {
     bot.chat(`Hello ${username}! I am your helper bot 🤝`);
   }
-  if (message === ".stop") {
-    if (!bot.activeTask) {
-      bot.pathfinder.setGoal(null);
-      bot.clearControlStates();
-      bot.chat("Task stopped!🛑")
+
+  if (message === ".help") {
+    bot.chat(`/msg ${username} Available Commands:`);
+    commands.array.forEach(cmd => bot.chat(`/msg ${username} ${cmd}`));
+  }
+  
+  if (message === ".throwall") {
+    const items = bot.inventory.items();
+  if (items.length === 0) {
+    bot.chat("My inventory is empty.");
+    return;
+  }
+  for (const item of items) {
+    try {
+      await bot.tossStack(item);
+    } catch (err) {
+      console.error(`Failed to drop ${item.name}:`, err);
     }
   }
+  bot.chat("Dropped all items.");
+};
 });
