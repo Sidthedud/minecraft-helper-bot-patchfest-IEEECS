@@ -3,6 +3,8 @@
 
 require('dotenv').config();
 const mineflayer = require('mineflayer');
+const handleCommands = require('./commands');
+
 
 // Create the bot instance
 const bot = mineflayer.createBot({
@@ -17,15 +19,11 @@ bot.once("spawn", () => {
 });
 
 bot.once("login", () => {
-  console.log(`Bot logged in as ${bot.username}`)
+  console.log(`Bot logged in as ${bot.username}`);
 });
 
 // Basic chat command listener
 bot.on("chat", (username, message) => {
-
   if (username === bot.username) return; // ignore itself
-
-  if (message === ".hello") {
-    bot.chat(`Hello ${username}! I am your helper bot 🤝`);
-  }
+  handleCommands(bot,username,message);
 });
