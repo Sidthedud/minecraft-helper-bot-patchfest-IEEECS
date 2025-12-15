@@ -3,6 +3,10 @@
 
 require('dotenv').config();
 const mineflayer = require('mineflayer');
+const pathfinder = require('mineflayer-pathfinder');
+
+bot.loadPlugin(pathfinder);
+bot.activeTask = null;
 
 // Create the bot instance
 const bot = mineflayer.createBot({
@@ -24,5 +28,12 @@ bot.on("chat", (username, message) => {
 
   if (message === ".hello") {
     bot.chat(`Hello ${username}! I am your helper bot 🤝`);
+  }
+  if (message === ".stop") {
+    if (!bot.activeTask) {
+      bot.pathfinder.setGoal(null);
+      bot.clearControlStates();
+      bot.chat("Task stopped!🛑")
+    }
   }
 });
