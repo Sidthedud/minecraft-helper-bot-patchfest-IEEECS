@@ -14,6 +14,7 @@ const bot = mineflayer.createBot({
 // Bot events
 bot.once("spawn", () => {
   console.log("🤖 Bot successfully spawned into the world!");
+  bot.chat("Bot ready! Type .help to see commands.");
 });
 
 // Basic chat command listener
