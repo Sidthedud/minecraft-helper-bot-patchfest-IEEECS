@@ -2,6 +2,7 @@
 ### A PatchFest Game Automation Project (Node.js + Mineflayer)
 
 ---
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## 📘 Overview
 **Minecraft Helper Bot** is a collaborative open-source automation bot built using the `mineflayer` library for Minecraft Java Edition servers.  
