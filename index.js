@@ -16,13 +16,6 @@ bot.once("spawn", () => {
   console.log("🤖 Bot successfully spawned into the world!");
 });
 
-commands = [
-  ".hello - Greets the player",
-  ".help - Lists all available commands",
-  ".ping - Checks bot status [Planned]",
-  ".listitems - Display bot's inventory"
-]
-
 // Basic chat command listener
 bot.on("chat", async (username, message) => {
 
@@ -32,11 +25,6 @@ bot.on("chat", async (username, message) => {
     bot.chat(`Hello ${username}! I am your helper bot 🤝`);
   }
 
-  if (message === ".help") {
-    bot.chat(`/msg ${username} Available Commands:`);
-    commands.array.forEach(cmd => bot.chat(`/msg ${username} ${cmd}`));
-  }
-  
   if (message === ".throwall") {
     const items = bot.inventory.items();
   if (items.length === 0) {
